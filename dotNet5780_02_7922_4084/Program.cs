@@ -20,13 +20,13 @@ namespace dotNet5780_02_7922_4084
         {
             List<Host> lsHosts;
             lsHosts = new List<Host>()
- {
- new Host(1, rand.Next(1,5)),
- new Host(2, rand.Next(1,5)),
- new Host(3, rand.Next(1,5)),
- new Host(4, rand.Next(1,5)),
- new Host(5, rand.Next(1,5))
- };
+             {
+                 new Host(1, rand.Next(1,5)),
+                 new Host(2, rand.Next(1,5)),
+                 new Host(3, rand.Next(1,5)),
+                 new Host(4, rand.Next(1,5)),
+                 new Host(5, rand.Next(1,5))
+             };
             for (int i = 0; i < 100; i++)
             {
                 GuestRequest gs1 = new GuestRequest();
