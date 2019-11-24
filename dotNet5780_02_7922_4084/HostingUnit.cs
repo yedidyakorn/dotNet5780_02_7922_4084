@@ -53,7 +53,7 @@ namespace dotNet5780_02_7922_4084
             return counter;
         }
 
-        public float GetAnnualBusyPercentage()
+        public float GetAnnualBusyPrecentege()
         {
             return (((float)GetAnnualBusyDays() / 372) * 100);
         }

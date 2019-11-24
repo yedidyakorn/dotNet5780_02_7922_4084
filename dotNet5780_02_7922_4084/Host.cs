@@ -66,12 +66,12 @@ namespace dotNet5780_02_7922_4084
 
         public IEnumerator<HostingUnit> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _hostingUnitCollection.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _hostingUnitCollection.GetEnumerator();
         }
 
         public HostingUnit this[int serialNb]
