@@ -7,38 +7,38 @@ namespace dotNet5780_02_7922_4084
         private static int _stSerialKey= 10000000;
         public readonly int _hostingUnitKey;
         public bool[,] _diary;
-        HostingUnit ()
+
+        public HostingUnit ()
         {
-            _stSerialKey++;
+            _hostingUnitKey = _stSerialKey++;
             _diary = new bool[12, 31];
+            for (int i = 0; i < 12; i++)
+                for (int j = 0; j < 31; j++)
+                    _diary[i, j] = false;
         }
 
         public override string ToString()
         {
             string ansewer = "";
-            ansewer += string.Format("unit ID number: {0}" , _stSerialKey);
+            ansewer += string.Format("unit ID number: {0}\t" , _hostingUnitKey);
             ansewer += string.Format(showTaken(_diary));
             return ansewer;
         }
 
         public bool ApproveRequest(GuestRequest guestReq)
         {
-            for(int i= guestReq._entryDate.Month-1;i<guestReq._releaseDate.Month-1;i++)
-            {
-                for(int j=guestReq._entryDate.Day-1;j<guestReq._releaseDate.Day-2;j++)
-                {
-                    if (_diary[i, j] == true)
-                        return false;
-                }
-            }
-            for (int i = guestReq._entryDate.Month - 1; i < guestReq._releaseDate.Month - 1; i++)
-            {
-                for (int j = guestReq._entryDate.Day - 1; j < guestReq._releaseDate.Day - 2; j++)
-                {
-                    _diary[i, j] = true;
-                    guestReq._isApproved = true;
-                }
-            }
+            int  begD, endD;
+            bool[] arr = new bool[372];
+            maxToArry(_diary, arr);//converts the calnder to one long array
+            begD = (guestReq._entryDate.Month - 1) * 31 + (guestReq._entryDate.Day - 1);//begining day
+            endD = (guestReq._releaseDate.Month - 1) * 31 + (guestReq._releaseDate.Day - 1)-begD ;//ending day
+            for (int i = begD + 1; i < endD - 2; i++)//checks if avalible
+                if (arr[i] == true)
+                    return false;
+            for (int i = begD + 1; i < endD - 2; i++)//
+                arr[i] = true;
+            arrayToMax(_diary, arr);//converts back to calnder
+            guestReq._isApproved = true;
             return true;
         }
 
@@ -53,7 +53,7 @@ namespace dotNet5780_02_7922_4084
             return counter;
         }
 
-        public float GetAnnualBusyPercentage()
+        public float GetAnnualBusyPrecentege()
         {
             return (((float)GetAnnualBusyDays() / 372) * 100);
         }
@@ -74,14 +74,14 @@ namespace dotNet5780_02_7922_4084
                 var currentDay = arr[month - 1, day - 1];
                 if (currentDay == true && !isCounting)
                 {
-                    result+=string.Format("Start date : {0} / {1} \n",  day, month);
+                    result+=string.Format("Start date : {0} / {1}, \t",  day, month);
                     isCounting = true;
                 }
                 //if vaction ended, isCounting = false
                 //or its the last day of the year
                 else if ((currentDay == false || (currentDay == true && day == 31 && month == 12)) && isCounting)
                 {
-                    result += string.Format(" , End date : " + (day - 1 == 0 ? 31 : day - 1) + "/" + ((day - 1 == 0) ? month - 1 : month)+"\n");
+                    result += string.Format("  End date : " + (day - 1 == 0 ? 31 : day - 1) + "/" + ((day - 1 == 0) ? month - 1 : month)+"\n");
                     isCounting = false;
                 }
                 //increase day 
@@ -97,5 +97,32 @@ namespace dotNet5780_02_7922_4084
             return GetAnnualBusyDays().CompareTo(((HostingUnit)obj).GetAnnualBusyDays());
         }
 
+        private static void maxToArry(bool[,] max, bool[] arr)//convorts a array to matrix 
+        {
+            int k = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                for (int j = 0; j < 31; j++)
+                {
+                    arr[k] = max[i, j];
+                    k++;
+                }
+            }
+            return;
+        }
+
+        private static void arrayToMax(bool[,] max, bool[] arr)//convorts a matrix to array
+        {
+            int k = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                for (int j = 0; j < 31; j++)
+                {
+                    max[i, j] = arr[k];
+                    k++;
+                }
+            }
+            return;
+        }
     }
 }

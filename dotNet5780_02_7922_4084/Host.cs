@@ -1,26 +1,92 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace dotNet5780_02_7922_4084
 {
-    public class Host
+    public class Host:IEnumerable<HostingUnit>
     {
         public int _hostKey;
-        public int _hostingUnitCollection;
+        public readonly List<HostingUnit> _hostingUnitCollection;
 
         public Host(int hostKey, int hostingUnitCollection)
         {
             this._hostKey = hostKey;
-            this._hostingUnitCollection = hostingUnitCollection;
+            _hostingUnitCollection = new List<HostingUnit>();
+            for (int i=0; i< hostingUnitCollection;i++)
+            {
+                _hostingUnitCollection.Add(new HostingUnit());
+            }
         }
 
-        internal void AssignRequests(params GuestRequest [] guestRequests)
+        public override string ToString()
         {
-            throw new NotImplementedException();
+            string ansewer = "";
+            foreach (HostingUnit item in _hostingUnitCollection)
+                ansewer += item.ToString()+"\n";
+            return ansewer;
         }
 
-        internal void SortUnits()
+        private int SubmitRequest(GuestRequest guestReq)
         {
-            throw new NotImplementedException();
+            foreach (HostingUnit item in _hostingUnitCollection)
+                if (item.ApproveRequest(guestReq))
+                    return item._hostingUnitKey;
+            return -1;
         }
+
+        public int GetHostAnnualBusyDays()
+        {
+            int sum=0;
+            foreach (HostingUnit item in _hostingUnitCollection)
+                sum += item.GetAnnualBusyDays();
+            return sum;
+        }
+
+        public void SortUnits()
+        {
+            _hostingUnitCollection.Sort();
+        }
+
+        public bool AssignRequests(params GuestRequest[] req)
+        {
+            bool result=true;
+            for(int i=0;i<req.Length;i++)
+            {
+                foreach (HostingUnit item in _hostingUnitCollection)
+                {
+                    if (SubmitRequest(req[i]) > 0)
+                        break;
+                }
+                if (!req[i]._isApproved)
+                    result=false;
+            }
+            return result;
+        }
+
+        public IEnumerator<HostingUnit> GetEnumerator()
+        {
+            return _hostingUnitCollection.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _hostingUnitCollection.GetEnumerator();
+        }
+
+        public HostingUnit this[int index]
+        {
+            get
+            {
+                return this._hostingUnitCollection[index];
+
+            }
+            set
+            {
+                this._hostingUnitCollection[index] = value;
+            }
+
+        }
+
     }
 }
