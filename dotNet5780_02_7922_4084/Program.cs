@@ -12,11 +12,13 @@ namespace dotNet5780_02_7922_4084
         private static GuestRequest CreateRandomRequest()
         {
             GuestRequest gs = new GuestRequest();
-            int begD = rand.Next(362);
             int duration = rand.Next(2, 10);
-            DateTime temp=new DateTime(rand.Next(1900, 2000), rand.Next(1, 12), rand.Next(1, 30));
-            gs._entryDate = temp; 
-            gs._releaseDate=gs._entryDate.AddDays((double)duration);
+            int month = rand.Next(1, 13);
+            int days = rand.Next(1, 31);
+            if (month == 2)
+                days = rand.Next(1, 29);
+            gs._entryDate = new DateTime(2019, month, days);
+            gs._releaseDate = gs._entryDate.AddDays((double)duration);
             return gs;
         }
         static void Main(string[] args)
@@ -54,7 +56,7 @@ namespace dotNet5780_02_7922_4084
                 }
             }
             //Create dictionary for all units <unitkey, occupancy_percentage>
-            Dictionary<long, float> dict = new Dictionary<long, float>();
+            Dictionary<int, float> dict = new Dictionary<int, float>();
             foreach (var host in lsHosts)
             {
                 //test Host IEnuramble is ok
@@ -66,8 +68,7 @@ namespace dotNet5780_02_7922_4084
             //get max value in dictionary
             float maxVal = dict.Values.Max();
             //get max value key name in dictionary
-            long maxKey =
-            dict.FirstOrDefault(x => x.Value == dict.Values.Max()).Key;
+            int maxKey = dict.FirstOrDefault(x => x.Value == dict.Values.Max()).Key;
             //find the Host that its unit has the maximum occupancy percentage
             foreach (var host in lsHosts)
             {
@@ -85,6 +86,7 @@ namespace dotNet5780_02_7922_4084
                     }
                 }
             }
+            Console.ReadKey();
         }
     }
 }

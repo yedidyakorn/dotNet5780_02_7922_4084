@@ -74,21 +74,18 @@ namespace dotNet5780_02_7922_4084
             return _hostingUnitCollection.GetEnumerator();
         }
 
-        public HostingUnit this[int serialNb]
+        public HostingUnit this[int index]
         {
             get
             {
-                HostingUnit result = null;
-                foreach (HostingUnit item in _hostingUnitCollection)
-                {
-                    if (item._hostingUnitKey == serialNb)
-                    {
-                        result = item;
-                        break;
-                    }
-                }
-                return result;
+                return this._hostingUnitCollection[index];
+
             }
+            set
+            {
+                this._hostingUnitCollection[index] = value;
+            }
+
         }
 
     }

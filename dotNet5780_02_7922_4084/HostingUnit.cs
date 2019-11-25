@@ -20,7 +20,7 @@ namespace dotNet5780_02_7922_4084
         public override string ToString()
         {
             string ansewer = "";
-            ansewer += string.Format("unit ID number: {0}" , _hostingUnitKey);
+            ansewer += string.Format("unit ID number: {0}\t" , _hostingUnitKey);
             ansewer += string.Format(showTaken(_diary));
             return ansewer;
         }
@@ -74,14 +74,14 @@ namespace dotNet5780_02_7922_4084
                 var currentDay = arr[month - 1, day - 1];
                 if (currentDay == true && !isCounting)
                 {
-                    result+=string.Format("Start date : {0} / {1} \n",  day, month);
+                    result+=string.Format("Start date : {0} / {1}, \t",  day, month);
                     isCounting = true;
                 }
                 //if vaction ended, isCounting = false
                 //or its the last day of the year
                 else if ((currentDay == false || (currentDay == true && day == 31 && month == 12)) && isCounting)
                 {
-                    result += string.Format(" , End date : " + (day - 1 == 0 ? 31 : day - 1) + "/" + ((day - 1 == 0) ? month - 1 : month)+"\n");
+                    result += string.Format("  End date : " + (day - 1 == 0 ? 31 : day - 1) + "/" + ((day - 1 == 0) ? month - 1 : month)+"\n");
                     isCounting = false;
                 }
                 //increase day 
