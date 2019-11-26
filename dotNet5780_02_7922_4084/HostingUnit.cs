@@ -1,14 +1,23 @@
-﻿using System;
+﻿/*
+File: HostingUnit.cs
+Description: object that represents one Hosting Unit
+Course: c# mini project
+Exercise 2
+Author: Yedidya Korn-203304084 & Dovi Goldberg-301637922
+*/
+
+
+using System;
 namespace dotNet5780_02_7922_4084
 
 {
-    public class HostingUnit: IComparable
+    public class HostingUnit : IComparable
     {
-        private static int _stSerialKey= 10000000;
+        private static int _stSerialKey = 10000000;
         public readonly int _hostingUnitKey;
         public bool[,] _diary;
 
-        public HostingUnit ()
+        public HostingUnit()
         {
             _hostingUnitKey = _stSerialKey++;
             _diary = new bool[12, 31];
@@ -20,22 +29,22 @@ namespace dotNet5780_02_7922_4084
         public override string ToString()
         {
             string ansewer = "";
-            ansewer += string.Format("unit ID number: {0}\t" , _hostingUnitKey);
+            ansewer += string.Format("unit ID number: {0}\n", _hostingUnitKey);
             ansewer += string.Format(showTaken(_diary));
             return ansewer;
         }
 
         public bool ApproveRequest(GuestRequest guestReq)
         {
-            int  begD, endD;
+            int begD, endD;
             bool[] arr = new bool[372];
             maxToArry(_diary, arr);//converts the calnder to one long array
             begD = (guestReq._entryDate.Month - 1) * 31 + (guestReq._entryDate.Day - 1);//begining day
-            endD = (guestReq._releaseDate.Month - 1) * 31 + (guestReq._releaseDate.Day - 1)-begD ;//ending day
+            endD = (guestReq._releaseDate.Month - 1) * 31 + (guestReq._releaseDate.Day - 1);//ending day
             for (int i = begD + 1; i < endD - 2; i++)//checks if avalible
                 if (arr[i] == true)
                     return false;
-            for (int i = begD + 1; i < endD - 2; i++)//
+            for (int i = begD + 1; i < endD - 2; i++)
                 arr[i] = true;
             arrayToMax(_diary, arr);//converts back to calnder
             guestReq._isApproved = true;
@@ -62,7 +71,7 @@ namespace dotNet5780_02_7922_4084
         {
 
             int day = 1, month = 1;
-            string result="";
+            string result = "";
             //flag for vacation period
             bool isCounting = false;
 
@@ -74,14 +83,14 @@ namespace dotNet5780_02_7922_4084
                 var currentDay = arr[month - 1, day - 1];
                 if (currentDay == true && !isCounting)
                 {
-                    result+=string.Format("Start date : {0} / {1}, \t",  day, month);
+                    result += string.Format("Start date: {0}/{1} \t", day, month);
                     isCounting = true;
                 }
                 //if vaction ended, isCounting = false
                 //or its the last day of the year
                 else if ((currentDay == false || (currentDay == true && day == 31 && month == 12)) && isCounting)
                 {
-                    result += string.Format("  End date : " + (day - 1 == 0 ? 31 : day - 1) + "/" + ((day - 1 == 0) ? month - 1 : month)+"\n");
+                    result += string.Format("  End date: " + (day - 1 == 0 ? 31 : day - 1) + "/" + ((day - 1 == 0) ? month - 1 : month) + "\n");
                     isCounting = false;
                 }
                 //increase day 
