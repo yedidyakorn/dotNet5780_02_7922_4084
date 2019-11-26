@@ -1,10 +1,18 @@
-﻿using System;
+﻿/*
+File: Host.cs
+Description: object that represents a few Hosting Units of one Host
+Course: c# mini project
+Exercise 2
+Author: Yedidya Korn-203304084 & Dovi Goldberg-301637922
+*/
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace dotNet5780_02_7922_4084
 {
-    public class Host:IEnumerable<HostingUnit>
+    public class Host : IEnumerable<HostingUnit>
     {
         public int _hostKey;
         public readonly List<HostingUnit> _hostingUnitCollection;
@@ -13,7 +21,7 @@ namespace dotNet5780_02_7922_4084
         {
             this._hostKey = hostKey;
             _hostingUnitCollection = new List<HostingUnit>();
-            for (int i=0; i< hostingUnitCollection;i++)
+            for (int i = 0; i < hostingUnitCollection; i++)
             {
                 _hostingUnitCollection.Add(new HostingUnit());
             }
@@ -23,7 +31,7 @@ namespace dotNet5780_02_7922_4084
         {
             string ansewer = "";
             foreach (HostingUnit item in _hostingUnitCollection)
-                ansewer += item.ToString()+"\n";
+                ansewer += item.ToString() + "\n";
             return ansewer;
         }
 
@@ -37,7 +45,7 @@ namespace dotNet5780_02_7922_4084
 
         public int GetHostAnnualBusyDays()
         {
-            int sum=0;
+            int sum = 0;
             foreach (HostingUnit item in _hostingUnitCollection)
                 sum += item.GetAnnualBusyDays();
             return sum;
@@ -50,16 +58,11 @@ namespace dotNet5780_02_7922_4084
 
         public bool AssignRequests(params GuestRequest[] req)
         {
-            bool result=true;
-            for(int i=0;i<req.Length;i++)
+            bool result = true;
+            for (int i = 0; i < req.Length; i++)
             {
-                foreach (HostingUnit item in _hostingUnitCollection)
-                {
-                    if (SubmitRequest(req[i]) > 0)
-                        break;
-                }
-                if (!req[i]._isApproved)
-                    result=false;
+                if (SubmitRequest(req[i]) < 0)
+                    result = false;
             }
             return result;
         }

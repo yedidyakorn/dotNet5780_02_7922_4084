@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+File: program.cs
+Description: runs a program to check if host mangement system works
+Course: c# mini project
+Exercise 2
+Author: Yedidya Korn-203304084 & Dovi Goldberg-301637922
+*/
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
