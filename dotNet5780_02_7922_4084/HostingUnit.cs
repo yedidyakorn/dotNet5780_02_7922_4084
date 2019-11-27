@@ -17,7 +17,7 @@ namespace dotNet5780_02_7922_4084
         public readonly int _hostingUnitKey;
         public bool[,] _diary;
 
-        public HostingUnit()
+        public HostingUnit()        //ctor for a HostingUnit 
         {
             _hostingUnitKey = _stSerialKey++;
             _diary = new bool[12, 31];
@@ -26,7 +26,7 @@ namespace dotNet5780_02_7922_4084
                     _diary[i, j] = false;
         }
 
-        public override string ToString()
+        public override string ToString()        //returns a string with the object info
         {
             string ansewer = "";
             ansewer += string.Format("unit ID number: {0}\n", _hostingUnitKey);
@@ -34,7 +34,7 @@ namespace dotNet5780_02_7922_4084
             return ansewer;
         }
 
-        public bool ApproveRequest(GuestRequest guestReq)
+        public bool ApproveRequest(GuestRequest guestReq)        //returns true if a guest request is aprooved and false if can't be aprooved
         {
             int begD, endD;
             bool[] arr = new bool[372];
@@ -62,12 +62,12 @@ namespace dotNet5780_02_7922_4084
             return counter;
         }
 
-        public float GetAnnualBusyPrecentege()
+        public float GetAnnualBusyPrecentege()      //returns Annual Busy Precentege
         {
             return (((float)GetAnnualBusyDays() / 372) * 100);
         }
 
-        private static string showTaken(bool[,] arr)
+        private static string showTaken(bool[,] arr)        //returns the dates that are taken (as a string)
         {
 
             int day = 1, month = 1;
@@ -101,7 +101,7 @@ namespace dotNet5780_02_7922_4084
             return result;
         }
 
-        public int CompareTo(object obj)
+        public int CompareTo(object obj)    //Icomperble
         {
             return GetAnnualBusyDays().CompareTo(((HostingUnit)obj).GetAnnualBusyDays());
         }
