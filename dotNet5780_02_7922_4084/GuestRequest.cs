@@ -16,7 +16,7 @@ namespace dotNet5780_02_7922_4084
         public DateTime _releaseDate { set; get; }  
         public bool _isApproved { set; get; }
 
-        public override string ToString()
+        public override string ToString()       //returns a string with the object info
         {
             string ansewer = "";
             ansewer+= string.Format("entry date: {0}\trelease date: {1}\t", _entryDate,_releaseDate );

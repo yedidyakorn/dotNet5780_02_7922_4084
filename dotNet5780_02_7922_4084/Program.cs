@@ -17,8 +17,8 @@ namespace dotNet5780_02_7922_4084
 {
     class Program
     {
-        static Random rand = new Random(DateTime.Now.Millisecond);
-        private static GuestRequest CreateRandomRequest()
+        static Random rand = new Random(DateTime.Now.Millisecond);      
+        private static GuestRequest CreateRandomRequest()       //creates a random guest request
         {
             GuestRequest gs = new GuestRequest();
             int duration = rand.Next(2, 10);
@@ -33,7 +33,7 @@ namespace dotNet5780_02_7922_4084
         static void Main(string[] args)
         {
             List<Host> lsHosts;
-            lsHosts = new List<Host>()
+            lsHosts = new List<Host>()      
             {
                 new Host(1, rand.Next(1,5)),
                 new Host(2, rand.Next(1,5)),

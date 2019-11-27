@@ -17,7 +17,7 @@ namespace dotNet5780_02_7922_4084
         public int _hostKey;
         public readonly List<HostingUnit> _hostingUnitCollection;
 
-        public Host(int hostKey, int hostingUnitCollection)
+        public Host(int hostKey, int hostingUnitCollection)     //ctor
         {
             this._hostKey = hostKey;
             _hostingUnitCollection = new List<HostingUnit>();
@@ -27,7 +27,7 @@ namespace dotNet5780_02_7922_4084
             }
         }
 
-        public override string ToString()
+        public override string ToString()      //returns a string with the object info
         {
             string ansewer = "";
             foreach (HostingUnit item in _hostingUnitCollection)
@@ -35,7 +35,7 @@ namespace dotNet5780_02_7922_4084
             return ansewer;
         }
 
-        private int SubmitRequest(GuestRequest guestReq)
+        private int SubmitRequest(GuestRequest guestReq)        //returns the SN of hosting unit that could aproove request
         {
             foreach (HostingUnit item in _hostingUnitCollection)
                 if (item.ApproveRequest(guestReq))
@@ -43,7 +43,7 @@ namespace dotNet5780_02_7922_4084
             return -1;
         }
 
-        public int GetHostAnnualBusyDays()
+        public int GetHostAnnualBusyDays()      //returns Annual Busy Precentege of all the difrint units
         {
             int sum = 0;
             foreach (HostingUnit item in _hostingUnitCollection)
@@ -51,12 +51,12 @@ namespace dotNet5780_02_7922_4084
             return sum;
         }
 
-        public void SortUnits()
+        public void SortUnits()     //sorts units acording to Annual Busy Precentege
         {
             _hostingUnitCollection.Sort();
         }
 
-        public bool AssignRequests(params GuestRequest[] req)
+        public bool AssignRequests(params GuestRequest[] req)       // get a unknown number of requests and returns true if all aprooved
         {
             bool result = true;
             for (int i = 0; i < req.Length; i++)
@@ -67,7 +67,7 @@ namespace dotNet5780_02_7922_4084
             return result;
         }
 
-        public IEnumerator<HostingUnit> GetEnumerator()
+        public IEnumerator<HostingUnit> GetEnumerator()         //IEnumerator
         {
             return _hostingUnitCollection.GetEnumerator();
         }
@@ -77,7 +77,7 @@ namespace dotNet5780_02_7922_4084
             return _hostingUnitCollection.GetEnumerator();
         }
 
-        public HostingUnit this[int index]
+        public HostingUnit this[int index]      //indexer
         {
             get
             {
